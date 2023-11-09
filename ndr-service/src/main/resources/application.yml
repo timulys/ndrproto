@@ -1,0 +1,25 @@
+server:
+  port: 9099
+
+spring:
+  application:
+    name: NDR-SERVICE
+
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+
+opensearch:
+  protocol: http
+  #  url: 10.160.1.86 # 1? Arkime
+  url: 10.170.2.42 # 3? Arkime
+  port: 9200
+  username: admin
+  password: No1ids@#
+
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

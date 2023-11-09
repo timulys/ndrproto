@@ -1,0 +1,45 @@
+server:
+  port: 8000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  # API Gateway ??
+  application:
+    name: GATEWAY-SERVICE
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            # allowedOrigin: "*"
+            # 2.4.0?? ???? allow-credentials ?? ?? allowedOrigins?? ?? "*" ? ???
+            allowedOriginPatterns: "*"
+            allow-credentials: true
+            allowedHeaders: "*"
+            allowedMethods:
+              - PUT
+              - GET
+              - POST
+              - DELETE
+              - OPTIONS
+      routes:
+        # NDR Service
+        - id: ndr-service
+          uri: lb://NDR-SERVICE
+          predicates:
+            - Path=/session/**
+          filters:
+            - AuthenticationFilter # JWT Authentication Gateway Filter
+        # JWT Sign Service (?? ??? ?? ?????? Filter ???)
+        - id: sign-service
+          uri: lb://SIGN-SERVICE
+          predicates:
+            - Path=/sign/**
+          filters:
+            - AuthenticationFilter # JWT Authentication Gateway Filter

@@ -1,0 +1,38 @@
+server:
+  port: 9898
+
+spring:
+  application:
+    name: SIGN-SERVICE
+  jwt:
+    secretKey: secretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkey
+# ===============================
+# DATABASE SOURCE
+# ===============================
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://10.170.1.17:5432/tessdb
+    username: tess
+    password: no1ids
+    tomcat:
+      validation-query: SELECT 1
+# ===============================
+# JPA / HIBERNATE
+# ===============================
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+# ===============================
+# EUREKA INSTANCE
+# ===============================
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
