@@ -42,8 +42,7 @@ public class QueryBuilder {
 		List<Query> mustQueries = new ArrayList<>();
 		// search condition : _id
 		if (!sessionRequest.getId().isBlank()) {
-			mustQueries.add(Query.of(query -> query.match(
-				value -> value.field("_id").query(FieldValue.of(sessionRequest.getId()))
+			mustQueries.add(Query.of(query -> query.match(value -> value.field("_id").query(FieldValue.of(sessionRequest.getId()))
 			)));
 		}
 		

@@ -43,8 +43,7 @@ public class SessionRepositoryImpl implements SessionRepository {
 	@Override
 	public List<Session> selectAllSession(SessionRequest sessionRequest) {
 		try {
-			SearchResponse<Session> searchResponse =
-				client.search(queryBuilder.mustQueryBuilder(sessionRequest), Session.class);
+			SearchResponse<Session> searchResponse = client.search(queryBuilder.mustQueryBuilder(sessionRequest), Session.class);
 			return searchResponse.hits().hits().stream().map(hit -> {
 				// FIXME : Document _id 조회 방법 찾을것
 				Session session = hit.source();
